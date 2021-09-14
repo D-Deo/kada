@@ -1,4 +1,4 @@
-module github.com/D-Deo/kada
+module github.com/D-Deo/kada.go
 
 go 1.17
 
