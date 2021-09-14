@@ -1,9 +1,9 @@
 package gate
 
 import (
-	"kada/server/config"
-	"kada/server/core"
-	"kada/server/log"
+	"kada/core"
+	"kada/log"
+	"kada/utils/config"
 )
 
 const (
@@ -19,11 +19,7 @@ var (
 func Startup() error {
 	log.Info("[Gate] Service Startup ...")
 
-	mode, ok := config.I[config.GATE][config.GATE_MODE]
-	if !ok {
-		mode = SOCKET_MODE
-	}
-
+	mode := config.GetWithDef("gate", "mode", SOCKET_MODE)
 	switch mode {
 	case SOCKET_MODE:
 		s := new(Server)

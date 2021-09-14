@@ -1,8 +1,8 @@
 package gate
 
 import (
-	"kada/server/core"
-	"kada/server/log"
+	"kada/core"
+	"kada/log"
 )
 
 const (
@@ -37,8 +37,8 @@ func Depack(sid string, buffer []byte) []byte {
 
 		head := core.BytesToInt32(body[0:4])
 
-		data := make([]byte, 1024)
-		data = body[4:]
+		// data := make([]byte, 1024)
+		data := body[4:]
 
 		Call(sid, head, data)
 

@@ -1,8 +1,8 @@
 package gate
 
 import (
-	"kada/server/core"
-	"kada/server/log"
+	"kada/core"
+	"kada/log"
 )
 
 var (
@@ -54,7 +54,6 @@ func Call(sid string, head int32, data []byte) {
 	}
 
 	log.Info(sid, head, "server handle success")
-	return
 }
 
 //Bind 绑定控制器

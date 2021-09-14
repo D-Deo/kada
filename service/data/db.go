@@ -3,9 +3,9 @@ package data
 import (
 	"container/list"
 	"fmt"
-	"kada/server/core"
-	"kada/server/log"
-	"kada/server/utils/config"
+	"kada/core"
+	"kada/log"
+	"kada/utils/config"
 	"sync"
 
 	"database/sql"

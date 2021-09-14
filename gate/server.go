@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net"
 	"sync"
-	
-	"kada/server/config"
-	"kada/server/core"
-	"kada/server/log"
+
+	"kada/core"
+	"kada/log"
+	"kada/utils/config"
 )
 
 // var _server *Server
@@ -31,14 +31,9 @@ func (o *Server) Startup() error {
 	o.Sessions = make(map[string]core.Session)
 	o.Locker = sync.Mutex{}
 
-	host, ok := config.I[config.GATE][config.GATE_HOST]
-	if !ok {
-		host = "127.0.0.1"
-	}
-	port, ok := config.I[config.GATE][config.GATE_PORT]
-	if !ok {
-		port = "10000"
-	}
+	host := config.GetWithDef("gate", "host", "127.0.0.1")
+	port := config.GetWithDef("gate", "port", "10000")
+
 	address := fmt.Sprintf("%s:%s", host, port)
 	log.Info("[Gate] Address", address)
 
@@ -61,7 +56,8 @@ func (o *Server) Listen(listener net.Listener) {
 
 	for {
 		conn, err := listener.Accept()
-		defer conn.Close()
+		// defer conn.Close()
+
 		if err != nil {
 			log.Error("[Gate] Accept", err)
 			continue
@@ -85,15 +81,23 @@ func (o *Server) Handle(session core.Session) {
 
 	go func(s core.Session) {
 		defer core.Panic()
-		for {
-			select {
-			case data := <-s.Chan:
-				if _, err := s.Conn.Write(data); err != nil {
-					log.Error(s.Id, "Gate Server Write", err)
-					break
-				}
+
+		for data := range s.Chan {
+			if _, err := s.Conn.Write(data); err != nil {
+				log.Error(s.Id, "Gate Server Write", err)
+				break
 			}
 		}
+
+		// for {
+		// 	select {
+		// 	case data := <-s.Chan:
+		// 		if _, err := s.Conn.Write(data); err != nil {
+		// 			log.Error(s.Id, "Gate Server Write", err)
+		// 			break
+		// 		}
+		// 	}
+		// }
 	}(session)
 
 	buffer := make([]byte, 0)

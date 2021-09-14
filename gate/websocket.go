@@ -1,8 +1,8 @@
 package gate
 
 import (
-	"kada/server/core"
-	"kada/server/log"
+	"kada/core"
+	"kada/log"
 	"net/http"
 
 	"golang.org/x/net/websocket"

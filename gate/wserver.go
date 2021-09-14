@@ -1,12 +1,11 @@
 package gate
 
 import (
-	"kada/server/config"
-	"kada/server/core"
-	"kada/server/log"
-	"log"
+	"kada/core"
+	"kada/log"
+	"kada/utils/config"
 	"net/http"
-	
+
 	"golang.org/x/net/websocket"
 )
 
@@ -19,10 +18,7 @@ type WServer struct {
 func (o *WServer) Startup() error {
 	o.Sessions = make(map[string]core.Session)
 
-	port, ok := config.I[config.GATE][config.GATE_PORT]
-	if !ok {
-		port = "10000"
-	}
+	port := config.GetWithDef("gate", "port", "10000")
 	log.Info("[Gate] WS Listen Port", port)
 
 	http.Handle("/", websocket.Handler(o.Handle))

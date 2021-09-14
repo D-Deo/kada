@@ -3,7 +3,7 @@
 package console
 
 import (
-	"kada/server/core"
+	"kada/core"
 )
 
 const (

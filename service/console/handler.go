@@ -2,8 +2,8 @@ package console
 
 import (
 	"bufio"
-	"kada/server/core"
-	"kada/server/log"
+	"kada/core"
+	"kada/log"
 	"os"
 	"strings"
 )
@@ -38,24 +38,24 @@ func (o *Handler) Register(args *RegisterArgs, back *int) error {
 // 监听控制台消息
 func (o *Handler) Listen(args *int, back *int) error {
 	defer core.Panic()
-	
+
 	log.Signal("[console] wait listening cmd ...")
-	
+
 	reader := bufio.NewReader(os.Stdin)
-	
+
 	for {
 		cmd, _, err := reader.ReadLine()
 		if err != nil {
 			return err
 		}
-		
+
 		cmds := strings.Split(string(cmd), " ")
 		log.Info("[console] cmd: %v", cmds)
-		
+
 		if cmds[0] == "over" {
 			return nil
 		}
-		
+
 		fun, ok := o.FuncMap[cmds[0]]
 		if !ok {
 			log.Warn("[console] no cmd: %s", cmds[0])
