@@ -1,9 +1,9 @@
 package gate
 
 import (
-	"kada/core"
-	"kada/log"
-	"kada/utils/config"
+	"github.com/D-Deo/kada.go"
+	"github.com/D-Deo/kada.go/log"
+	"github.com/D-Deo/kada.go/utils/config"
 )
 
 const (
@@ -12,7 +12,7 @@ const (
 )
 
 var (
-	_server core.IServer
+	_server kada.IServer
 )
 
 //Startup 启动服务
@@ -29,7 +29,7 @@ func Startup() error {
 		_server = s
 	default:
 		log.Error("[Gate] UnKnow Mode", mode)
-		return core.ErrServer
+		return kada.ErrServer
 	}
 
 	if err := _server.Startup(); err != nil {

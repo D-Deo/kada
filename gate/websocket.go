@@ -1,9 +1,10 @@
 package gate
 
 import (
-	"kada/core"
-	"kada/log"
 	"net/http"
+
+	"github.com/D-Deo/kada.go"
+	"github.com/D-Deo/kada.go/log"
 
 	"golang.org/x/net/websocket"
 )
@@ -13,14 +14,14 @@ type WebSocketBinary func(string, []byte)
 
 //WebSocket
 type WebSocket struct {
-	Sessions       map[string]core.Session
+	Sessions       map[string]kada.Session
 	BinaryHandler  WebSocketBinary
 	MessageHandler WebSocektMessage
 }
 
 func NewWebSocket() *WebSocket {
 	ws := &WebSocket{}
-	ws.Sessions = make(map[string]core.Session)
+	ws.Sessions = make(map[string]kada.Session)
 	return ws
 }
 
@@ -36,7 +37,7 @@ func (o *WebSocket) Handler(ws *websocket.Conn) {
 	defer ws.Close()
 
 	sid := ws.RemoteAddr().String()
-	session := core.Session{}
+	session := kada.Session{}
 	session.Id = sid
 	session.WSConn = ws
 	o.Sessions[sid] = session

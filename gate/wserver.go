@@ -1,22 +1,24 @@
 package gate
 
 import (
-	"kada/core"
-	"kada/log"
-	"kada/utils/config"
 	"net/http"
+
+	"github.com/D-Deo/kada.go"
+	"github.com/D-Deo/kada.go/log"
+	"github.com/D-Deo/kada.go/utils"
+	"github.com/D-Deo/kada.go/utils/config"
 
 	"golang.org/x/net/websocket"
 )
 
 //WServer WebSocket服务端实现
 type WServer struct {
-	Sessions map[string]core.Session
+	Sessions map[string]kada.Session
 }
 
 //Startup 启动服务，监听端口
 func (o *WServer) Startup() error {
-	o.Sessions = make(map[string]core.Session)
+	o.Sessions = make(map[string]kada.Session)
 
 	port := config.GetWithDef("gate", "port", "10000")
 	log.Info("[Gate] WS Listen Port", port)
@@ -34,7 +36,7 @@ func (o *WServer) Handle(ws *websocket.Conn) {
 	defer ws.Close()
 
 	sid := ws.RemoteAddr().String()
-	session := core.Session{}
+	session := kada.Session{}
 	session.Id = sid
 	// session.Chan = make(chan []byte)
 	session.WSConn = ws
@@ -63,7 +65,7 @@ func (o *WServer) Send(sid string, pid int32, data []byte) error {
 			log.Panic("[Gate] send", err)
 			return err
 		}
-		log.Debug(sid, "[Gate] send pid", pid, "data", core.PrintBuffer(data))
+		log.Debug(sid, "[Gate] send pid", pid, "data", utils.PrintBuffer(data))
 		return nil
 	}
 	log.Warn(sid, "[Gate] no found client")

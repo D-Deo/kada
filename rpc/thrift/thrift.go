@@ -3,6 +3,7 @@ package thrift
 import (
 	"crypto/tls"
 	"fmt"
+
 	"github.com/apache/thrift/lib/go/thrift"
 )
 

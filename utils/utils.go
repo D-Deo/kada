@@ -1,4 +1,4 @@
-package core
+package utils
 
 import (
 	"bytes"
@@ -88,15 +88,15 @@ func ShowName(uid uint32, username string, phone string, nickname string) string
 	if nickname != "" {
 		return nickname
 	}
-	
+
 	if username != "" {
 		return username
 	}
-	
+
 	if phone != "" {
 		return phone
 	}
-	
+
 	return strconv.Itoa(int(uid))
 }
 

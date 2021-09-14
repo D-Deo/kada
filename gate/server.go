@@ -5,9 +5,10 @@ import (
 	"net"
 	"sync"
 
-	"kada/core"
-	"kada/log"
-	"kada/utils/config"
+	"github.com/D-Deo/kada.go"
+	"github.com/D-Deo/kada.go/log"
+	"github.com/D-Deo/kada.go/utils"
+	"github.com/D-Deo/kada.go/utils/config"
 )
 
 // var _server *Server
@@ -22,13 +23,13 @@ import (
 
 //Server TCP服务，监听客户端连接和收发消息
 type Server struct {
-	Sessions map[string]core.Session
+	Sessions map[string]kada.Session
 	Locker   sync.Mutex
 }
 
 //Startup 启动服务，监听端口
 func (o *Server) Startup() error {
-	o.Sessions = make(map[string]core.Session)
+	o.Sessions = make(map[string]kada.Session)
 	o.Locker = sync.Mutex{}
 
 	host := config.GetWithDef("gate", "host", "127.0.0.1")
@@ -51,7 +52,7 @@ func (o *Server) Startup() error {
 
 //Listen 监听客户端连接
 func (o *Server) Listen(listener net.Listener) {
-	defer core.Panic()
+	defer kada.Panic()
 	defer listener.Close()
 
 	for {
@@ -64,7 +65,7 @@ func (o *Server) Listen(listener net.Listener) {
 		}
 
 		sid := conn.RemoteAddr().String()
-		session := core.Session{}
+		session := kada.Session{}
 		session.Id = sid
 		session.Chan = make(chan []byte)
 		session.Conn = conn
@@ -76,11 +77,11 @@ func (o *Server) Listen(listener net.Listener) {
 }
 
 //Handle 处理连接
-func (o *Server) Handle(session core.Session) {
-	defer core.Panic()
+func (o *Server) Handle(session kada.Session) {
+	defer kada.Panic()
 
-	go func(s core.Session) {
-		defer core.Panic()
+	go func(s kada.Session) {
+		defer kada.Panic()
 
 		for data := range s.Chan {
 			if _, err := s.Conn.Write(data); err != nil {
@@ -123,7 +124,7 @@ func (o *Server) Send(sid string, pid int32, data []byte) error {
 	if session, ok := o.Sessions[sid]; ok {
 		data = Enpack(pid, data)
 		session.Chan <- data
-		log.Debug(sid, "Gate Server send pid", pid, "data", core.PrintBuffer(data))
+		log.Debug(sid, "Gate Server send pid", pid, "data", utils.PrintBuffer(data))
 		return nil
 	}
 	log.Warn(sid, "Gate Server no found client")

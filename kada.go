@@ -1,4 +1,4 @@
-package core
+package kada
 
 import (
 	"fmt"
@@ -36,17 +36,17 @@ func Panic() {
 		// exeName := os.Args[0] //获取程序名称
 		// pid := os.Getpid() //获取进程ID
 		now := time.Now() //获取当前时间
-		
+
 		time := now.Format("2006_01-02_15-04-05") //设定时间格式
 		filename := fmt.Sprintf("%s.dmp", time)   //保存错误信息文件名:程序名-进程ID-当前时间（年月日时分秒）
 		fmt.Println("dump to file", filename)
-		
+
 		f, e := os.Create(filename)
 		defer f.Close()
 		if e != nil {
 			return
 		}
-		
+
 		f.WriteString(fmt.Sprintf("%v\r\n", err)) //输出panic信息
 		f.WriteString(string(debug.Stack()))      //输出堆栈信息
 	}

@@ -1,8 +1,8 @@
 package gate
 
 import (
-	"kada/core"
-	"kada/log"
+	"github.com/D-Deo/kada.go"
+	"github.com/D-Deo/kada.go/log"
 )
 
 var (
@@ -26,7 +26,7 @@ var (
 type ControlHandler struct {
 	Handle  string
 	Action  string
-	Service *core.IService
+	Service *kada.IService
 }
 
 type GateMessage struct {
@@ -57,7 +57,7 @@ func Call(sid string, head int32, data []byte) {
 }
 
 //Bind 绑定控制器
-func Bind(id int32, handle string, action string, service core.IService) {
+func Bind(id int32, handle string, action string, service kada.IService) {
 	handler := &ControlHandler{
 		Handle:  handle,
 		Action:  action,

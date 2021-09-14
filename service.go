@@ -1,4 +1,4 @@
-package core
+package kada
 
 import (
 	"log"
@@ -15,7 +15,7 @@ type Message struct {
 type Service struct {
 	Recv chan Message
 	Send chan error
-	
+
 	Handlers map[string]reflect.Value
 }
 
@@ -39,7 +39,7 @@ func (o *Service) Start() {
 // 控制服务
 func (o *Service) Handle() {
 	defer Panic()
-	
+
 	for {
 		select {
 		case msg, ok := <-o.Recv:
@@ -69,14 +69,14 @@ func (o *Service) Call(handle string, action string, args interface{}, back inte
 	if args == nil {
 		args = new(int)
 	}
-	
+
 	if back == nil {
 		back = new(int)
 	}
-	
+
 	msg := Message{handle, action, args, back}
 	o.Recv <- msg
-	
+
 	err := <-o.Send
 	return err
 }

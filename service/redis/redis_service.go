@@ -2,7 +2,7 @@ package redis
 
 import (
 	"fmt"
-	"kada/log"
+	"github.com/D-Deo/kada.go/log"
 
 	"github.com/gomodule/redigo/redis"
 )

@@ -1,8 +1,8 @@
 package gate
 
 import (
-	"kada/core"
-	"kada/log"
+	"github.com/D-Deo/kada.go/log"
+	"github.com/D-Deo/kada.go/utils"
 )
 
 const (
@@ -11,8 +11,8 @@ const (
 
 //Enpack 封包
 func Enpack(head int32, data []byte) []byte {
-	body := append(core.Int32ToBytes(head), data...)
-	return append(core.Int32ToBytes(int32(len(body))), body...)
+	body := append(utils.Int32ToBytes(head), data...)
+	return append(utils.Int32ToBytes(int32(len(body))), body...)
 }
 
 //Depack 解包
@@ -28,14 +28,14 @@ func Depack(sid string, buffer []byte) []byte {
 			break
 		}
 
-		readLen := core.BytesToInt32(buffer[i : i+MESSAGE_LENGTH])
+		readLen := utils.BytesToInt32(buffer[i : i+MESSAGE_LENGTH])
 		if length < i+MESSAGE_LENGTH+readLen {
 			break
 		}
 
 		body = buffer[i+MESSAGE_LENGTH : i+MESSAGE_LENGTH+readLen]
 
-		head := core.BytesToInt32(body[0:4])
+		head := utils.BytesToInt32(body[0:4])
 
 		// data := make([]byte, 1024)
 		data := body[4:]

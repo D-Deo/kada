@@ -2,10 +2,11 @@ package console
 
 import (
 	"bufio"
-	"kada/core"
-	"kada/log"
 	"os"
 	"strings"
+
+	"github.com/D-Deo/kada.go"
+	"github.com/D-Deo/kada.go/log"
 )
 
 type RegisterArgs struct {
@@ -37,7 +38,7 @@ func (o *Handler) Register(args *RegisterArgs, back *int) error {
 
 // 监听控制台消息
 func (o *Handler) Listen(args *int, back *int) error {
-	defer core.Panic()
+	defer kada.Panic()
 
 	log.Signal("[console] wait listening cmd ...")
 

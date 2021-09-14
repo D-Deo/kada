@@ -3,8 +3,9 @@ package config
 import (
 	"errors"
 	"fmt"
-	"github.com/larspensjo/config"
 	"strings"
+
+	"github.com/larspensjo/config"
 )
 
 var (
@@ -38,12 +39,12 @@ func (o *Ini) Get(title string, key string) (string, error) {
 	if !o.cfg.HasOption(title, key) {
 		return "", ErrNoValue
 	}
-	
+
 	value, err := o.cfg.String(title, key)
 	if err != nil {
 		return "", err
 	}
-	
+
 	return value, nil
 }
 

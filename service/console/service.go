@@ -2,20 +2,18 @@
 //	可以在控制台输入指令来控制程序
 package console
 
-import (
-	"kada/core"
-)
+import "github.com/D-Deo/kada.go"
 
 const (
 	MODULE = "console"
 )
 
 var (
-	_service *core.Service
+	_service *kada.Service
 )
 
 func init() {
-	_service = core.NewService()
+	_service = kada.NewService()
 	_service.Register(MODULE, NewHandler())
 	_service.Start()
 }

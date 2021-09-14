@@ -3,10 +3,11 @@ package log
 import (
 	"flag"
 	"fmt"
-	"github.com/issue9/term/colors"
-	"github.com/longbozhan/timewriter"
 	"log"
 	"time"
+
+	"github.com/issue9/term/colors"
+	"github.com/longbozhan/timewriter"
 )
 
 type Level int

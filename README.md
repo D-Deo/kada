@@ -1,12 +1,12 @@
-# kada-server-go
+# kada.go
 
-[wiki](https://github.com/D-Deo/kada-server-go/wiki)
+[wiki](https://github.com/D-Deo/kada.go/wiki)
 
 ## 【Redis】
 
 ```go
 // 导入模块
-import "kada/service/redis"
+import "github.com/D-Deo/kada.go/service/redis"
 ```
 ```go
 // 注册 redis 连接信息
@@ -25,7 +25,7 @@ maps = redis.Get(tag).HGetAll(key)
 ## 【MongoDB】
 ```go
 // 导入模块
-import "kada/service/mongo"
+import "github.com/D-Deo/kada.go/service/mongo"
 ```
 ```go
 // 连接MongoDB
@@ -38,7 +38,7 @@ mongo.Connect(uri, db)
 ## 【Thrift】
 ```go
 // 导入模块
-import "kada/rpc/thrift"
+import "github.com/D-Deo/kada.go/rpc/thrift"
 ```
 ```go
 // 创建服务监听对象

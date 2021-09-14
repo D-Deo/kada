@@ -3,10 +3,11 @@ package data
 import (
 	"container/list"
 	"fmt"
-	"kada/core"
-	"kada/log"
-	"kada/utils/config"
 	"sync"
+
+	"github.com/D-Deo/kada.go"
+	"github.com/D-Deo/kada.go/log"
+	"github.com/D-Deo/kada.go/utils/config"
 
 	"database/sql"
 
@@ -111,7 +112,7 @@ func (o *DB) Execute(sql string, args ...interface{}) error {
 
 //Worker 工作线程
 func (o *DB) Worker(ch <-chan DBMessage, ach <-chan DBInsert, proc int) {
-	defer core.Panic()
+	defer kada.Panic()
 
 	for {
 		select {

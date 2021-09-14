@@ -1,9 +1,9 @@
-package core
+package kada
 
 import (
 	"errors"
 	"net"
-	
+
 	"golang.org/x/net/websocket"
 )
 
