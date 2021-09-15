@@ -39,11 +39,11 @@ type (
 
 // 创建服务
 func NewService() *Service {
-	service := &Service{}
-	service.Recv = make(chan Message)
-	service.Send = make(chan error)
-	service.Handlers = make(map[string]reflect.Value)
-	return service
+	return &Service{
+		Recv:     make(chan Message),
+		Send:     make(chan error),
+		Handlers: make(map[string]reflect.Value),
+	}
 }
 
 // 注册服务
@@ -96,7 +96,7 @@ func (o *Service) Call(handle string, action string, args interface{}, back inte
 // 启动程序
 func Run() {
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, os.Kill, syscall.SIGTERM)
+	signal.Notify(c, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGKILL)
 	log.Signal("[kada] run ...")
 	sig := <-c
 	log.Signal("[kada] on signal: %v", sig)
