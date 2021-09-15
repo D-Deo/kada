@@ -7,8 +7,8 @@ import (
 
 	"github.com/D-Deo/kada.go"
 	"github.com/D-Deo/kada.go/log"
+	"github.com/D-Deo/kada.go/plugins/config"
 	"github.com/D-Deo/kada.go/utils"
-	"github.com/D-Deo/kada.go/utils/config"
 )
 
 // var _server *Server
@@ -23,13 +23,13 @@ import (
 
 //Server TCP服务，监听客户端连接和收发消息
 type Server struct {
-	Sessions map[string]kada.Session
+	Sessions map[string]Session
 	Locker   sync.Mutex
 }
 
 //Startup 启动服务，监听端口
 func (o *Server) Startup() error {
-	o.Sessions = make(map[string]kada.Session)
+	o.Sessions = make(map[string]Session)
 	o.Locker = sync.Mutex{}
 
 	host := config.GetWithDef("gate", "host", "127.0.0.1")
@@ -65,7 +65,7 @@ func (o *Server) Listen(listener net.Listener) {
 		}
 
 		sid := conn.RemoteAddr().String()
-		session := kada.Session{}
+		session := Session{}
 		session.Id = sid
 		session.Chan = make(chan []byte)
 		session.Conn = conn
@@ -77,10 +77,10 @@ func (o *Server) Listen(listener net.Listener) {
 }
 
 //Handle 处理连接
-func (o *Server) Handle(session kada.Session) {
+func (o *Server) Handle(session Session) {
 	defer kada.Panic()
 
-	go func(s kada.Session) {
+	go func(s Session) {
 		defer kada.Panic()
 
 		for data := range s.Chan {

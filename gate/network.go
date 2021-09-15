@@ -1,4 +1,4 @@
-package kada
+package gate
 
 import (
 	"errors"
@@ -33,13 +33,4 @@ type IServer interface {
 	Startup() error
 	Send(string, int32, []byte) error
 	SendAll(int32, []byte) error
-}
-
-type IService interface {
-	Startup() error
-	Call(string, string, interface{}, interface{}) error
-}
-
-type IHandler interface {
-	Handle(string, int32, []byte) error
 }

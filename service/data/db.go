@@ -7,7 +7,7 @@ import (
 
 	"github.com/D-Deo/kada.go"
 	"github.com/D-Deo/kada.go/log"
-	"github.com/D-Deo/kada.go/utils/config"
+	"github.com/D-Deo/kada.go/plugins/config"
 
 	"database/sql"
 

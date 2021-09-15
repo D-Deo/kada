@@ -26,8 +26,8 @@ var (
 	_option Option
 	_logger *log.Logger
 
-	_l = flag.String("l", "info", "log output level")
-	_c = flag.Bool("c", false, "log output console")
+	_l = flag.String("l", "debug", "log output level")
+	_c = flag.Bool("c", true, "log output console")
 )
 
 type Option struct {
@@ -117,37 +117,37 @@ func write(level string, s string, v ...interface{}) {
 
 // 打印调试级别日志
 func Debug(format string, v ...interface{}) {
-	go output(LDebug, fmt.Sprintf(format, v...))
+	output(LDebug, fmt.Sprintf(format, v...))
 }
 
 // 打印信息级别日志
 func Info(format string, v ...interface{}) {
-	go output(LInfo, fmt.Sprintf(format, v...))
+	output(LInfo, fmt.Sprintf(format, v...))
 }
 
 // 打印警告级别日志
 func Warn(format string, v ...interface{}) {
-	go output(LWarn, fmt.Sprintf(format, v...))
+	output(LWarn, fmt.Sprintf(format, v...))
 }
 
 // 打印错误级别日志
 func Error(format string, v ...interface{}) {
-	go output(LError, fmt.Sprintf(format, v...))
+	output(LError, fmt.Sprintf(format, v...))
 }
 
 // 打印信号级别日志
 func Signal(format string, v ...interface{}) {
-	go output(LSignal, fmt.Sprintf(format, v...))
+	output(LSignal, fmt.Sprintf(format, v...))
 }
 
 // 打印崩溃级别日志（格式化）
 func Dump(format string, v ...interface{}) {
-	go output(LDump, fmt.Sprintf(format, v...))
+	output(LDump, fmt.Sprintf(format, v...))
 }
 
 // 兼容日志打印函数
 func Print(v ...interface{}) {
-	go output(LDebug, fmt.Sprint(v...))
+	output(LDebug, fmt.Sprint(v...))
 }
 
 // 兼容日志打印函数（格式化）

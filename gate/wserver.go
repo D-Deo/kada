@@ -3,22 +3,21 @@ package gate
 import (
 	"net/http"
 
-	"github.com/D-Deo/kada.go"
 	"github.com/D-Deo/kada.go/log"
+	"github.com/D-Deo/kada.go/plugins/config"
 	"github.com/D-Deo/kada.go/utils"
-	"github.com/D-Deo/kada.go/utils/config"
 
 	"golang.org/x/net/websocket"
 )
 
 //WServer WebSocket服务端实现
 type WServer struct {
-	Sessions map[string]kada.Session
+	Sessions map[string]Session
 }
 
 //Startup 启动服务，监听端口
 func (o *WServer) Startup() error {
-	o.Sessions = make(map[string]kada.Session)
+	o.Sessions = make(map[string]Session)
 
 	port := config.GetWithDef("gate", "port", "10000")
 	log.Info("[Gate] WS Listen Port", port)
@@ -36,7 +35,7 @@ func (o *WServer) Handle(ws *websocket.Conn) {
 	defer ws.Close()
 
 	sid := ws.RemoteAddr().String()
-	session := kada.Session{}
+	session := Session{}
 	session.Id = sid
 	// session.Chan = make(chan []byte)
 	session.WSConn = ws
